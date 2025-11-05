@@ -1,7 +1,12 @@
 (() => {
   const PUBLIC_FOLDER_LINK = 'https://disk.yandex.ru/d/nQ8Hwia3_31HPA';
   const API_BASE = 'https://cloud-api.yandex.net/v1/disk/public';
-  const PROXY = 'https://proxy-h9qbqbjzc-oldmelnicks-projects.vercel.app/api/proxy?pk=';
+  // было (не работает с твоим прокси):
+// const PROXY = 'https://proxy-h9qbqbjzc-oldmelnicks-projects.vercel.app/api/proxy?pk=';
+
+// нужно:
+const PROXY = 'https://proxy-h9qbqbjzc-oldmelnicks-projects.vercel.app/api/proxy?u=';
+
   
   const audio    = document.getElementById('audio');
   const listEl   = document.getElementById('list');
