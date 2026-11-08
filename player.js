@@ -76,8 +76,14 @@ const PROXY = 'https://proxyjs-tau.vercel.app/api/proxy?u=';
           const m = base.match(/^\s*([^-\u2014]{1,80})\s*[-\u2014]\s*(.+)$/);
           if (m){ artist = m[1].trim(); title = m[2].trim(); }
 
-          const dl = await fetchJSON(API_BASE + '/resources/download?public_key=' + encodeURIComponent(PUBLIC_FOLDER_LINK) + '&path=' + encodeURIComponent(it.path));
-          const playableUrl = PROXY + encodeURIComponent(dl.href);
+          // The folder listing already includes a fresh download URL for each file.
+          // Request one separately only if Yandex omits it from the listing.
+          let href = it.file;
+          if (!href){
+            const dl = await fetchJSON(API_BASE + '/resources/download?public_key=' + encodeURIComponent(PUBLIC_FOLDER_LINK) + '&path=' + encodeURIComponent(it.path));
+            href = dl.href;
+          }
+          const playableUrl = PROXY + encodeURIComponent(href);
 
           collected.push({ id: it.resource_id, title: title, artist: artist, url: playableUrl });
         }catch(e){ console.warn('Пропускаю файл:', it && it.name, e); }
